@@ -2,7 +2,8 @@ import '@paperback/runtime-polyfills'
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import * as cheerio from 'cheerio'
-import { fixture } from './helpers.ts'
+import { fakeRequests, fixture } from './helpers.ts'
+import { Manhwa18Net, listUrl, searchUrl } from '../src/Manhwa18Net/Manhwa18Net.ts'
 import {
     chapterNumber, hasNextPage, htmlToText, parseChapters, parseGenreTags, parseMangaDetails,
     parseMangaList, parsePages, parseProps, trimMicros,
@@ -104,4 +105,80 @@ test('chapter page: image urls from chapterContent', () => {
     assert.equal(pages.length, 5)
     for (const p of pages) assert.match(p, /^https:\/\/min\.manhwa18\.net\//)
     assert.deepEqual(parsePages($, '<p>no images</p>'), [])
+})
+
+const query = (title: string, tagIds: string[]) => ({
+    title,
+    includedTags: tagIds.map(id => ({ id, label: id })),
+    excludedTags: [],
+    parameters: {},
+})
+
+test('listUrl: sort and page', () => {
+    assert.equal(listUrl('top', 2), 'https://manhwa18.net/manga-list?sort=top&page=2')
+})
+
+test('searchUrl: text search ignores filters', () => {
+    assert.equal(searchUrl(query(' secret class ', ['genre.adult', 'status.completed']), 1), 'https://manhwa18.net/tim-kiem?q=secret%20class&page=1')
+})
+
+test('searchUrl: first genre and first sort win, every status is sent', () => {
+    assert.equal(
+        searchUrl(query('', ['genre.adult', 'genre.drama', 'sort.top', 'sort.new', 'status.Ongoing', 'status.completed']), 2),
+        'https://manhwa18.net/genre/adult?sort=top&page=2&Ongoing=1&completed=1',
+    )
+    assert.equal(searchUrl(query('', ['status.Onhold']), 1), 'https://manhwa18.net/manga-list?page=1&Onhold=1')
+    assert.equal(searchUrl(query('', []), 1), 'https://manhwa18.net/manga-list?page=1')
+})
+
+test('getSearchResults reads mangas for text search and sets next page', async () => {
+    const source = new Manhwa18Net(cheerio)
+    const requests = fakeRequests(() => page('search.html').html())
+    source.requestManager = requests
+    const results = await source.getSearchResults(query('secret', []), undefined)
+    assert.equal(results.results.length, 3)
+    assert.deepEqual(results.metadata, { page: 2 })
+    assert.equal(requests.calls[0].url, 'https://manhwa18.net/tim-kiem?q=secret&page=1')
+})
+
+test('getViewMoreItems stops on the last page', async () => {
+    const source = new Manhwa18Net(cheerio)
+    source.requestManager = fakeRequests(() => page('last.html').html())
+    const results = await source.getViewMoreItems('update', { page: 9999 })
+    assert.deepEqual(results.results, [])
+    assert.equal(results.metadata, undefined)
+})
+
+test('getHomePageSections sends four empty sections first, then filled ones', async () => {
+    const source = new Manhwa18Net(cheerio)
+    source.requestManager = fakeRequests(() => page('list.html').html())
+    const seen: number[] = []
+    await source.getHomePageSections(section => seen.push(section.items.length))
+    assert.deepEqual(seen, [0, 0, 0, 0, 3, 3, 3, 3])
+})
+
+test('getMangaDetails and getChapters read the title page', async () => {
+    const source = new Manhwa18Net(cheerio)
+    const requests = fakeRequests(() => page('manga.html').html())
+    source.requestManager = requests
+    assert.equal((await source.getMangaDetails('secret-class')).mangaInfo.titles[0], 'Secret class')
+    assert.equal((await source.getChapters('secret-class')).length, 4)
+    assert.equal(requests.calls[0].url, 'https://manhwa18.net/manga/secret-class')
+})
+
+test('getChapterDetails returns pages, and fails clearly when a chapter has none', async () => {
+    const source = new Manhwa18Net(cheerio)
+    const requests = fakeRequests(() => page('chapter.html').html())
+    source.requestManager = requests
+    const details = await source.getChapterDetails('secret-class', 'chapter-320')
+    assert.equal(details.pages.length, 5)
+    assert.equal(requests.calls[0].url, 'https://manhwa18.net/manga/secret-class/chapter-320')
+    source.requestManager = fakeRequests(() => '<div id="app" data-page="{&quot;props&quot;:{&quot;chapterContent&quot;:&quot;&quot;}}"></div>')
+    await assert.rejects(source.getChapterDetails('secret-class', 'chapter-1'), /Manhwa18: no pages found/)
+})
+
+test('a Cloudflare block tells the user to run the bypass', async () => {
+    const source = new Manhwa18Net(cheerio)
+    source.requestManager = fakeRequests(() => 'Just a moment...', 503)
+    await assert.rejects(source.getMangaDetails('secret-class'), /Cloudflare/)
 })

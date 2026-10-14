@@ -1,0 +1,22 @@
+{
+  "name": "paperback-manhwa-extensions",
+  "version": "1.0.0",
+  "private": true,
+  "repositoryName": "Manhwa Extensions",
+  "description": "Paperback 0.8 sources for ManhwaClub and Manhwa18.net",
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test test/*.test.ts",
+    "smoke": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON test/live-manhwaclub.ts",
+    "bundle": "paperback bundle",
+    "serve": "paperback serve"
+  },
+  "devDependencies": {
+    "@paperback/runtime-polyfills": "0.8.7",
+    "@paperback/toolchain": "0.8.7",
+    "@paperback/types": "0.8.7",
+    "cheerio": "1.0.0-rc.12",
+    "typescript": "5.9.3"
+  }
+}

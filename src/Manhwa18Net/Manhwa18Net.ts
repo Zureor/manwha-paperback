@@ -10,7 +10,6 @@ import {
     type Response,
     type SearchRequest,
     type SourceInfo,
-    type SourceInterceptor,
     type SourceManga,
     type TagSection,
 } from '@paperback/types'
@@ -19,8 +18,6 @@ import {
     M18_DOMAIN, hasNextPage, parseChapters, parseGenreTags, parseMangaDetails, parseMangaList, parsePages, parseProps,
     type InertiaProps,
 } from './Manhwa18NetParser.ts'
-
-const USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15'
 
 export const Manhwa18NetInfo: SourceInfo = {
     version: '1.0.0',
@@ -65,26 +62,27 @@ export function searchUrl(query: SearchRequest, page: number): string {
     return `${M18_DOMAIN}/${genre ? `genre/${genre}` : 'manga-list'}?${params.join('&')}`
 }
 
-class Manhwa18NetInterceptor implements SourceInterceptor {
-    async interceptRequest(request: Request): Promise<Request> {
-        // Reassign the whole object: 0.8 does not see in-place header edits.
-        request.headers = { ...(request.headers ?? {}), 'user-agent': USER_AGENT, referer: `${M18_DOMAIN}/` }
-        return request
-    }
-
-    async interceptResponse(response: Response): Promise<Response> {
-        return response
-    }
-}
-
 type PageMetadata = { page?: number } | undefined
 
 export class Manhwa18Net extends Source {
     requestManager = App.createRequestManager({
         requestsPerSecond: 3,
         requestTimeout: 20000,
-        interceptor: new Manhwa18NetInterceptor(),
+        interceptor: {
+            // The app's own user agent is the one the Cloudflare bypass webview solves with, so cf_clearance keeps working.
+            interceptRequest: async (request: Request): Promise<Request> => {
+                // Reassign the whole object: 0.8 does not see in-place header edits.
+                request.headers = { ...(request.headers ?? {}), ...(await this.siteHeaders()) }
+                return request
+            },
+            interceptResponse: async (response: Response): Promise<Response> => response,
+        },
     })
+
+    private async siteHeaders(): Promise<Record<string, string>> {
+        const userAgent = await this.requestManager.getDefaultUserAgent()
+        return { ...(userAgent ? { 'user-agent': userAgent } : {}), referer: `${M18_DOMAIN}/` }
+    }
 
     private async fetchPage(url: string): Promise<{ $: CheerioAPI; props: InertiaProps }> {
         const response = await this.requestManager.schedule(App.createRequest({ url, method: 'GET' }), 1)
@@ -150,10 +148,6 @@ export class Manhwa18Net extends Source {
     }
 
     override async getCloudflareBypassRequestAsync(): Promise<Request> {
-        return App.createRequest({
-            url: `${M18_DOMAIN}/`,
-            method: 'GET',
-            headers: { 'user-agent': USER_AGENT, referer: `${M18_DOMAIN}/` },
-        })
+        return App.createRequest({ url: `${M18_DOMAIN}/`, method: 'GET', headers: await this.siteHeaders() })
     }
 }

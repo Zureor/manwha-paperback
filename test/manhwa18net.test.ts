@@ -182,3 +182,13 @@ test('a Cloudflare block tells the user to run the bypass', async () => {
     source.requestManager = fakeRequests(() => 'Just a moment...', 503)
     await assert.rejects(source.getMangaDetails('secret-class'), /Cloudflare/)
 })
+
+test('requests and the Cloudflare bypass share the app default user agent, plus the site referer', async () => {
+    const source = new Manhwa18Net(cheerio)
+    source.requestManager.getDefaultUserAgent = async () => 'TestUA/1.0'
+    const request = await source.requestManager.interceptor!.interceptRequest({ url: 'u', method: 'GET', headers: {}, cookies: [] })
+    assert.deepEqual(request.headers, { 'user-agent': 'TestUA/1.0', referer: 'https://manhwa18.net/' })
+    const bypass = await source.getCloudflareBypassRequestAsync()
+    assert.equal(bypass.url, 'https://manhwa18.net/')
+    assert.equal(bypass.headers['user-agent'], 'TestUA/1.0')
+})

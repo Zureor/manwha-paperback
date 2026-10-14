@@ -22,8 +22,9 @@ details and chapter list show, and a chapter's pages render.
   `@paperback/toolchain` **0.8.7**.
 - 0.8 runtime has no `setTimeout`/`setInterval`. Throttling is done by the
   request manager's `requestsPerSecond`.
-- Requests go through Apple's network stack, so the user agent should be a
-  Safari one.
+- Requests go through Apple's network stack. Requests use the app's default
+  user agent (`requestManager.getDefaultUserAgent()`), the same one the
+  Cloudflare bypass webview solves with, so `cf_clearance` stays valid.
 - manhwa18.net is reachable from the user's PC browser (ECH) but plain-SNI
   clients (curl, node) get a TLS reset. Live verification of manhwa18.net is
   done through the in-app browser pane; node-based tests use captured fixtures.
@@ -68,8 +69,9 @@ tested without the Paperback runtime.
   sites are behind Cloudflare; without this a challenge would make a source
   unusable until a rebuild.
 - Request manager: `requestsPerSecond` around 3, `requestTimeout` 20000.
-- Interceptor sets a Mac Safari `user-agent` and `referer: <site>/` on every
-  request, including image requests.
+- Interceptor sets the app's default `user-agent` and `referer: <site>/` on
+  every request, including image requests; the Cloudflare bypass request uses
+  the same headers.
 - `getMangaShareUrl(mangaId)` returns `<site>/manga/<mangaId>`.
 - On a 403/503 response with a Cloudflare challenge, throw an error telling the
   user to run the Cloudflare bypass from the source settings.

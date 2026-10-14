@@ -53,7 +53,7 @@ test('details: badge-free title, alt titles, cover, synopsis, status, genres', (
     assert.ok(info.titles.includes('얌전한 고양이'))
     assert.equal(info.titles.filter(t => t === 'A Quiet Cat').length, 1)
     assert.match(info.image, /^https:\/\/manhwaclub\.net\/wp-content\/uploads\//)
-    assert.match(info.desc, /^There are two types of people\./)
+    assert.equal(info.desc, 'Synthetic synopsis used by the tests & fixtures.\n\nSecond paragraph.')
     assert.equal(info.status, 'Ongoing')
     assert.equal(info.author, '')
     assert.equal(info.hentai, true)
@@ -181,4 +181,14 @@ test('getHomePageSections sends four empty sections first, then filled ones', as
     const seen: number[] = []
     await source.getHomePageSections(section => seen.push(section.items.length))
     assert.deepEqual(seen, [0, 0, 0, 0, 10, 10, 10, 10])
+})
+
+test('requests and the Cloudflare bypass share the app default user agent, plus the site referer', async () => {
+    const source = new ManhwaClub(cheerio)
+    source.requestManager.getDefaultUserAgent = async () => 'TestUA/1.0'
+    const request = await source.requestManager.interceptor!.interceptRequest({ url: 'u', method: 'GET', headers: { 'content-type': 'x' }, cookies: [] })
+    assert.deepEqual(request.headers, { 'content-type': 'x', 'user-agent': 'TestUA/1.0', referer: 'https://manhwaclub.net/' })
+    const bypass = await source.getCloudflareBypassRequestAsync()
+    assert.equal(bypass.url, 'https://manhwaclub.net/')
+    assert.equal(bypass.headers['user-agent'], 'TestUA/1.0')
 })

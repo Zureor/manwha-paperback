@@ -2,7 +2,8 @@ import '@paperback/runtime-polyfills'
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import * as cheerio from 'cheerio'
-import { fixture } from './helpers.ts'
+import { fakeRequests, fixture } from './helpers.ts'
+import { ManhwaClub, listUrl, searchUrl } from '../src/ManhwaClub/ManhwaClub.ts'
 import {
     chapterNumber, fixImageUrl, hasNextPage, parseChapters, parseDate, parseGenreTags,
     parseMangaDetails, parseMangaList, parsePages, parsePostId,
@@ -107,4 +108,77 @@ test('chapter page: 17 https images in order', () => {
     assert.equal(pages.length, 17)
     for (const p of pages) assert.match(p, /^https:\/\/manhwaclub\.net\/wp-content\/uploads\/WP-manga\//)
     assert.match(pages[0]!, /\/1-[^/]*$/)
+})
+
+const query = (title: string, tagIds: string[]) => ({
+    title,
+    includedTags: tagIds.map(id => ({ id, label: id })),
+    excludedTags: [],
+    parameters: {},
+})
+
+test('listUrl: page 1 has no page segment', () => {
+    assert.equal(listUrl('latest', 1), 'https://manhwaclub.net/manga/?m_orderby=latest')
+    assert.equal(listUrl('views', 3), 'https://manhwaclub.net/manga/page/3/?m_orderby=views')
+})
+
+test('searchUrl: text, every genre and status, first sort only, paging', () => {
+    assert.equal(
+        searchUrl(query('secret class', ['genre.romance', 'genre.drama', 'status.end', 'sort.views', 'sort.latest']), 2),
+        'https://manhwaclub.net/page/2/?s=secret%20class&post_type=wp-manga&genre%5B%5D=romance&genre%5B%5D=drama&status%5B%5D=end&m_orderby=views',
+    )
+    assert.equal(searchUrl(query('', []), 1), 'https://manhwaclub.net/?s=&post_type=wp-manga')
+})
+
+test('getSearchResults parses results and returns next-page metadata', async () => {
+    const source = new ManhwaClub(cheerio)
+    const requests = fakeRequests(() => page('search.html').html())
+    source.requestManager = requests
+    const results = await source.getSearchResults(query('secret', []), undefined)
+    assert.equal(results.results.length, 20)
+    assert.deepEqual(results.metadata, { page: 2 })
+    assert.equal(requests.calls[0].url, 'https://manhwaclub.net/?s=secret&post_type=wp-manga')
+})
+
+test('getChapters posts the numeric post id to admin-ajax', async () => {
+    const source = new ManhwaClub(cheerio)
+    const requests = fakeRequests(request => page(request.method === 'POST' ? 'chapters.html' : 'manga.html').html())
+    source.requestManager = requests
+    const chapters = await source.getChapters('a-quiet-cat')
+    assert.ok(chapters.length > 0)
+    assert.equal(requests.calls[0].url, 'https://manhwaclub.net/manga/a-quiet-cat/')
+    assert.equal(requests.calls[1].url, 'https://manhwaclub.net/wp-admin/admin-ajax.php')
+    assert.equal(requests.calls[1].method, 'POST')
+    assert.deepEqual(requests.calls[1].data, { action: 'manga_get_chapters', manga: '2494' })
+    assert.equal(requests.calls[1].headers['content-type'], 'application/x-www-form-urlencoded')
+})
+
+test('getChapters fails clearly when the page has no post id', async () => {
+    const source = new ManhwaClub(cheerio)
+    source.requestManager = fakeRequests(() => '<html></html>')
+    await assert.rejects(source.getChapters('missing'), /ManhwaClub: no manga id found on https:\/\/manhwaclub\.net\/manga\/missing\//)
+})
+
+test('getChapterDetails returns pages, and fails clearly when a chapter has none', async () => {
+    const source = new ManhwaClub(cheerio)
+    source.requestManager = fakeRequests(() => page('chapter.html').html())
+    const details = await source.getChapterDetails('a-quiet-cat', 'chapter-25-raw')
+    assert.equal(details.pages.length, 17)
+    assert.equal(details.mangaId, 'a-quiet-cat')
+    source.requestManager = fakeRequests(() => '<html></html>')
+    await assert.rejects(source.getChapterDetails('a-quiet-cat', 'chapter-1'), /ManhwaClub: no pages found/)
+})
+
+test('a Cloudflare block tells the user to run the bypass', async () => {
+    const source = new ManhwaClub(cheerio)
+    source.requestManager = fakeRequests(() => 'Just a moment...', 403)
+    await assert.rejects(source.getMangaDetails('a-quiet-cat'), /Cloudflare/)
+})
+
+test('getHomePageSections sends four empty sections first, then filled ones', async () => {
+    const source = new ManhwaClub(cheerio)
+    source.requestManager = fakeRequests(() => page('list.html').html())
+    const seen: number[] = []
+    await source.getHomePageSections(section => seen.push(section.items.length))
+    assert.deepEqual(seen, [0, 0, 0, 0, 10, 10, 10, 10])
 })

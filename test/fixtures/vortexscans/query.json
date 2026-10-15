@@ -1,0 +1,107 @@
+{
+  "totalCount": 473,
+  "posts": [
+    {
+      "id": 611,
+      "slug": "shadow-slave",
+      "postTitle": "Shadow Slave",
+      "featuredImage": "https://storage.vortexscans.org/upload/series/featured/4/94e4781a-a277-4ce1-bcee-c4a50bb89ac5.png",
+      "seriesType": "MANHWA",
+      "seriesStatus": "ONGOING",
+      "chapters": [
+        {
+          "id": 34039,
+          "number": 13,
+          "slug": "chapter-13",
+          "createdAt": "2026-10-15T04:56:39.421Z",
+          "isLocked": false,
+          "isAccessible": true
+        },
+        {
+          "id": 33722,
+          "number": 12,
+          "slug": "chapter-12",
+          "createdAt": "2026-10-08T09:49:22.515Z",
+          "isLocked": false,
+          "isAccessible": true
+        }
+      ]
+    },
+    {
+      "id": 471,
+      "slug": "fantasy-induction-corps",
+      "postTitle": "Fantasy Induction Corps",
+      "featuredImage": "https://storage.vortexscans.org/upload/2026/01/31/24a73ac5-9108-4823-b3ab-04376873d3f6.webp",
+      "seriesType": "MANHWA",
+      "seriesStatus": "ONGOING",
+      "chapters": [
+        {
+          "id": 33923,
+          "number": 43,
+          "slug": "chapter-43",
+          "createdAt": "2026-10-14T16:13:31.197Z",
+          "isLocked": true,
+          "isAccessible": false
+        },
+        {
+          "id": 33710,
+          "number": 42,
+          "slug": "chapter-42",
+          "createdAt": "2026-10-07T21:43:06.145Z",
+          "isLocked": true,
+          "isAccessible": false
+        },
+        {
+          "id": 33448,
+          "number": 41,
+          "slug": "chapter-41",
+          "createdAt": "2026-09-30T17:55:18.058Z",
+          "isLocked": false,
+          "isAccessible": true
+        },
+        {
+          "id": 33175,
+          "number": 40,
+          "slug": "chapter-40",
+          "createdAt": "2026-09-23T17:47:01.994Z",
+          "isLocked": false,
+          "isAccessible": true
+        }
+      ]
+    },
+    {
+      "id": 671,
+      "slug": "the-academy's-weapon-copycat",
+      "postTitle": "The Academy’s Weapon Copycat",
+      "featuredImage": "https://storage.vortexscans.org/upload/series/featured/lxJf4GmfzvG3XexqIAuF8KOjIGtbS5BK/d078354b-bfd8-4f2d-b52b-2471e6cf4a5b.png",
+      "seriesType": "MANHWA",
+      "seriesStatus": "ONGOING",
+      "chapters": [
+        {
+          "id": 33919,
+          "number": 23,
+          "slug": "chapter-23",
+          "createdAt": "2026-10-14T13:45:19.023Z",
+          "isLocked": true,
+          "isAccessible": false
+        },
+        {
+          "id": 33683,
+          "number": 22,
+          "slug": "chapter-22",
+          "createdAt": "2026-10-07T14:45:37.329Z",
+          "isLocked": false,
+          "isAccessible": true
+        },
+        {
+          "id": 33416,
+          "number": 21,
+          "slug": "chapter-21",
+          "createdAt": "2026-09-30T14:13:32.200Z",
+          "isLocked": false,
+          "isAccessible": true
+        }
+      ]
+    }
+  ]
+}

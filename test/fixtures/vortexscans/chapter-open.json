@@ -1,0 +1,26 @@
+{
+  "chapter": {
+    "id": 33451,
+    "slug": "chapter-49",
+    "number": 49,
+    "isLocked": false,
+    "isAccessible": true,
+    "isLockedByCoins": false,
+    "isPermanentlyLocked": false,
+    "isShortLinkLocked": false,
+    "images": [
+      {
+        "url": "https://storage.vortexscans.org/upload/series/archmage-curriculum/08f3fe80-7015-4256-b6e8-97f0dc23ae9c/page-0001_01_1790794698463-605779.webp",
+        "order": 0
+      },
+      {
+        "url": "https://storage.vortexscans.org/upload/series/archmage-curriculum/08f3fe80-7015-4256-b6e8-97f0dc23ae9c/page-0002_01_1790794698464-286785.webp",
+        "order": 1
+      },
+      {
+        "url": "https://storage.vortexscans.org/upload/series/archmage-curriculum/08f3fe80-7015-4256-b6e8-97f0dc23ae9c/page-0003_02_1790794699209-599747.webp",
+        "order": 2
+      }
+    ]
+  }
+}

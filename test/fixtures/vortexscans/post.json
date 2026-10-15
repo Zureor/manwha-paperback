@@ -1,0 +1,27 @@
+{
+  "totalChapterCount": 51,
+  "post": {
+    "id": 442,
+    "slug": "archmage-curriculum",
+    "postTitle": "Archmage Curriculum",
+    "isNovel": false,
+    "featuredImage": "https://storage.vortexscans.org/upload/series/featured/lxJf4GmfzvG3XexqIAuF8KOjIGtbS5BK/b06b011f-579b-49b1-96ea-abe52ff70ccd.png",
+    "alternativeTitles": "대마법사 커리큘럼, The Archmage Curriculum",
+    "author": "",
+    "artist": "",
+    "seriesType": "MANHWA",
+    "seriesStatus": "ONGOING",
+    "postContent": "<p>Synthetic synopsis used by the tests &amp; fixtures.</p>\n<p>Second paragraph.</p>",
+    "genres": [
+      {
+        "id": 1,
+        "name": "Action"
+      },
+      {
+        "id": 47,
+        "name": "academy"
+      }
+    ],
+    "chapters": []
+  }
+}

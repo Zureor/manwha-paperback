@@ -1,0 +1,430 @@
+[
+  {
+    "id": 1,
+    "name": "Action"
+  },
+  {
+    "id": 2,
+    "name": "Drama"
+  },
+  {
+    "id": 3,
+    "name": "Shounen"
+  },
+  {
+    "id": 4,
+    "name": "Sports"
+  },
+  {
+    "id": 5,
+    "name": "Manhwa"
+  },
+  {
+    "id": 6,
+    "name": "Martial Arts"
+  },
+  {
+    "id": 7,
+    "name": "Comedy"
+  },
+  {
+    "id": 8,
+    "name": "Fantasy"
+  },
+  {
+    "id": 9,
+    "name": "Horror"
+  },
+  {
+    "id": 10,
+    "name": "Seinen"
+  },
+  {
+    "id": 11,
+    "name": "Supernatural"
+  },
+  {
+    "id": 12,
+    "name": "Mature"
+  },
+  {
+    "id": 13,
+    "name": "Adventure"
+  },
+  {
+    "id": 14,
+    "name": "Monsters"
+  },
+  {
+    "id": 15,
+    "name": "System"
+  },
+  {
+    "id": 16,
+    "name": "Reincarnation"
+  },
+  {
+    "id": 17,
+    "name": "Revenge"
+  },
+  {
+    "id": 18,
+    "name": "Slice Of Life"
+  },
+  {
+    "id": 19,
+    "name": "Historical"
+  },
+  {
+    "id": 20,
+    "name": "Romance"
+  },
+  {
+    "id": 21,
+    "name": "Josei"
+  },
+  {
+    "id": 22,
+    "name": "Shoujo"
+  },
+  {
+    "id": 23,
+    "name": "School Life"
+  },
+  {
+    "id": 24,
+    "name": "terror"
+  },
+  {
+    "id": 25,
+    "name": "elf"
+  },
+  {
+    "id": 26,
+    "name": "shojo"
+  },
+  {
+    "id": 27,
+    "name": "Video Games"
+  },
+  {
+    "id": 28,
+    "name": "Fantas"
+  },
+  {
+    "id": 29,
+    "name": "WEB COMIC"
+  },
+  {
+    "id": 30,
+    "name": "Webtoons"
+  },
+  {
+    "id": 31,
+    "name": "Murim"
+  },
+  {
+    "id": 32,
+    "name": "Restaurant"
+  },
+  {
+    "id": 33,
+    "name": "Webtoon"
+  },
+  {
+    "id": 34,
+    "name": "+100 Chapter"
+  },
+  {
+    "id": 35,
+    "name": "Tower"
+  },
+  {
+    "id": 36,
+    "name": "Legendary "
+  },
+  {
+    "id": 37,
+    "name": "Dungeons"
+  },
+  {
+    "id": 38,
+    "name": "bully"
+  },
+  {
+    "id": 39,
+    "name": "orphan"
+  },
+  {
+    "id": 40,
+    "name": "Sci-Fi"
+  },
+  {
+    "id": 41,
+    "name": "Gore"
+  },
+  {
+    "id": 42,
+    "name": "Isekai"
+  },
+  {
+    "id": 43,
+    "name": "magic"
+  },
+  {
+    "id": 44,
+    "name": "blood"
+  },
+  {
+    "id": 45,
+    "name": "war"
+  },
+  {
+    "id": 46,
+    "name": "magic and sword"
+  },
+  {
+    "id": 47,
+    "name": "academy"
+  },
+  {
+    "id": 48,
+    "name": "violence"
+  },
+  {
+    "id": 49,
+    "name": "Harem"
+  },
+  {
+    "id": 50,
+    "name": "Myth"
+  },
+  {
+    "id": 51,
+    "name": "OverpoweredMC"
+  },
+  {
+    "id": 52,
+    "name": "TerritoryManagement"
+  },
+  {
+    "id": 53,
+    "name": "Swordsman"
+  },
+  {
+    "id": 54,
+    "name": "Necromancer"
+  },
+  {
+    "id": 55,
+    "name": "Mage"
+  },
+  {
+    "id": 56,
+    "name": "JackOfAllTrades"
+  },
+  {
+    "id": 57,
+    "name": "Artifacts"
+  },
+  {
+    "id": 58,
+    "name": "CharacterGrowth"
+  },
+  {
+    "id": 59,
+    "name": "Mercenary"
+  },
+  {
+    "id": 60,
+    "name": "Elementals"
+  },
+  {
+    "id": 61,
+    "name": "Genius"
+  },
+  {
+    "id": 62,
+    "name": "Psychological"
+  },
+  {
+    "id": 63,
+    "name": "Tragedy"
+  },
+  {
+    "id": 64,
+    "name": "Gender Bender"
+  },
+  {
+    "id": 405,
+    "name": "Streamer"
+  },
+  {
+    "id": 423,
+    "name": "office"
+  },
+  {
+    "id": 424,
+    "name": "Modern Fantasy"
+  },
+  {
+    "id": 586,
+    "name": "super powers"
+  },
+  {
+    "id": 588,
+    "name": "mystery"
+  },
+  {
+    "id": 618,
+    "name": "Steampunk"
+  },
+  {
+    "id": 619,
+    "name": "SciFiAction"
+  },
+  {
+    "id": 621,
+    "name": "SciFi"
+  },
+  {
+    "id": 622,
+    "name": "cyperpunk"
+  },
+  {
+    "id": 623,
+    "name": "edgerunner"
+  },
+  {
+    "id": 624,
+    "name": "Neo-Noir"
+  },
+  {
+    "id": 625,
+    "name": "Thriller"
+  },
+  {
+    "id": 626,
+    "name": "Crime Mystery"
+  },
+  {
+    "id": 628,
+    "name": "Survival"
+  },
+  {
+    "id": 629,
+    "name": "Corporate Conspiracy"
+  },
+  {
+    "id": 1359,
+    "name": "Bullying"
+  },
+  {
+    "id": 1360,
+    "name": "Delinquents"
+  },
+  {
+    "id": 1361,
+    "name": "Twins"
+  },
+  {
+    "id": 1362,
+    "name": "Identity Switch"
+  },
+  {
+    "id": 1507,
+    "name": "Family"
+  },
+  {
+    "id": 1557,
+    "name": "Shonen"
+  },
+  {
+    "id": 1599,
+    "name": "Urban"
+  },
+  {
+    "id": 1600,
+    "name": "High IQ"
+  },
+  {
+    "id": 1601,
+    "name": "Decisive"
+  },
+  {
+    "id": 1602,
+    "name": "Ruthless"
+  },
+  {
+    "id": 1623,
+    "name": "the death game"
+  },
+  {
+    "id": 1624,
+    "name": "the proactive"
+  },
+  {
+    "id": 1628,
+    "name": "Hunter"
+  },
+  {
+    "id": 1629,
+    "name": "Level Up"
+  },
+  {
+    "id": 1656,
+    "name": "Hot-Blooded"
+  },
+  {
+    "id": 1657,
+    "name": "Manly"
+  },
+  {
+    "id": 1658,
+    "name": "Zombies"
+  },
+  {
+    "id": 1660,
+    "name": "Apocalypse"
+  },
+  {
+    "id": 1667,
+    "name": "Vampire"
+  },
+  {
+    "id": 1737,
+    "name": "Worldbuilding"
+  },
+  {
+    "id": 1743,
+    "name": "DeathGame"
+  },
+  {
+    "id": 1753,
+    "name": "Refreshing"
+  },
+  {
+    "id": 1754,
+    "name": "CompetentMC"
+  },
+  {
+    "id": 1756,
+    "name": "Royalty"
+  },
+  {
+    "id": 1757,
+    "name": "PeriodPiece"
+  },
+  {
+    "id": 1814,
+    "name": "PostApocalyptic"
+  },
+  {
+    "id": 1816,
+    "name": "Cyberpunk"
+  },
+  {
+    "id": 1817,
+    "name": "Dystopian"
+  }
+]

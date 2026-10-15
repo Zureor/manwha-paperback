@@ -1,0 +1,59 @@
+{
+  "totalChapterCount": 51,
+  "post": {
+    "chapters": [
+      {
+        "id": 34038,
+        "slug": "chapter-51",
+        "number": 51,
+        "title": "",
+        "createdAt": "2026-10-14T23:47:55.285Z",
+        "isLocked": true,
+        "isAccessible": false,
+        "price": 100,
+        "chapterPurchased": false,
+        "unlockAt": null,
+        "isPermanentlyLocked": true
+      },
+      {
+        "id": 33714,
+        "slug": "chapter-50",
+        "number": 50,
+        "title": "",
+        "createdAt": "2026-10-07T23:14:24.776Z",
+        "isLocked": true,
+        "isAccessible": false,
+        "price": 100,
+        "chapterPurchased": false,
+        "unlockAt": null,
+        "isPermanentlyLocked": true
+      },
+      {
+        "id": 33451,
+        "slug": "chapter-49",
+        "number": 49,
+        "title": "",
+        "createdAt": "2026-09-30T18:58:46.387Z",
+        "isLocked": false,
+        "isAccessible": true,
+        "price": 0,
+        "chapterPurchased": false,
+        "unlockAt": null,
+        "isPermanentlyLocked": false
+      },
+      {
+        "id": 23233,
+        "slug": "chapter-1",
+        "number": 1,
+        "title": "",
+        "createdAt": "2025-11-27T12:21:53.003Z",
+        "isLocked": false,
+        "isAccessible": true,
+        "price": 0,
+        "chapterPurchased": false,
+        "unlockAt": null,
+        "isPermanentlyLocked": false
+      }
+    ]
+  }
+}
